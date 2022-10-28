@@ -2,6 +2,7 @@ import React, { FormEvent, useState } from "react";
 import Header from "../components/Header";
 import { useAddress, useContract } from "@thirdweb-dev/react";
 import { useRouter } from "next/router";
+
 type Props = {};
 
 const addItem = (props: Props) => {
@@ -10,8 +11,8 @@ const addItem = (props: Props) => {
   const [preview, setPreview] = useState<string>();
   const [image, setImage] = useState<File>();
   const { contract } = useContract(
-    process.env.NEXT_PUBLIC_MARKETPLACE_CONTRACT,
-    "marketplace"
+    process.env.NEXT_PUBLIC_COLLECTION_CONTRACT,
+    "nft-collection"
   );
 
   const mintNft = async (e: FormEvent<HTMLFormElement>) => {
@@ -32,6 +33,7 @@ const addItem = (props: Props) => {
     };
     try {
       const tx = await contract.mintTo(address, metadata);
+
       const receipt = tx.receipt;
       const tokenId = tx.id;
       const nft = await tx.data();
